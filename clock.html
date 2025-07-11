@@ -1,1 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parivartan | Advanced Analog Clock</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
 
+      body {
+        margin: 0;
+        background: #f5f5f5;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        height: 100vh;
+        transition: background-color 0.4s, color 0.4s;
+        color: #222;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      body.dark {
+        background: #121212;
+        color: #ddd;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+        max-width: 1000px;
+        width: 100%;
+      }
+
+      .clock {
+        position: relative;
+        width: 80vmin;
+        height: 80vmin;
+        max-width: 500px;
+        max-height: 500px;
+        border: 10px solid currentColor;
+        border-radius: 50%;
+        background: white;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        margin: 0;
+        order: 2;
+      }
+
+      body.dark .clock {
+        background: #222;
+        border-color: #ddd;
+        box-shadow: 0 0 20px rgba(255 255 255 / 0.15);
+      }
+
+      .number {
+        position: absolute;
+        width: 10%;
+        text-align: center;
+        font-size: 5vmin;
+        font-weight: bold;
+        transform: translate(-50%, -50%);
+        color: inherit;
+        pointer-events: none;
+      }
+
+      .hand {
+        position: absolute;
+        bottom: 50%;
+        left: 50%;
+        transform-origin: bottom center;
+        transform: translateX(-50%) rotate(0deg);
+        border-radius: 4px;
+      }
+
+      .hour {
+        width: 2.5%;
+        height: 25%;
+        background: currentColor;
+        z-index: 3;
+      }
+
+      .minute {
+        width: 1.8%;
+        height: 35%;
+        background: currentColor;
+        z-index: 2;
+      }
+
+      .second {
+        width: 1%;
+        height: 40%;
+        background: red;
+        z-index: 1;
+        transition: transform 0.1s linear;
+      }
+
+      .center {
+        position: absolute;
+        width: 3%;
+        height: 3%;
+        background: red;
+        top: 50%;
+        left: 50%;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+      }
+
+      .tick {
+        position: absolute;
+        width: 2px;
+        transform-origin: center bottom;
+        left: 50%;
+        top: 50%;
+        opacity: 1;
+        animation: tickPulse 1.2s ease-in-out infinite;
+      }
+
+      .hour-tick {
+        height: 12px;
+        background: currentColor;
+      }
+
+      .minute-tick {
+        height: 6px;
+        background: currentColor;
+      }
+
+      @keyframes tickPulse {
+        0%,
+        100% {
+          transform: scale(1) translate(-50%, -50%);
+          opacity: 0.6;
+        }
+
+        50% {
+          transform: scale(1.2) translate(-50%, -50%);
+          opacity: 1;
+        }
+      }
+
+      .panel {
+        text-align: center;
+        width: 100%;
+        max-width: 400px;
+        order: 1;
+      }
+
+      #digital-time {
+        font-size: 6vmin;
+        font-weight: 600;
+      }
+
+      #date-display {
+        font-size: 3vmin;
+      }
+
+      .controls,
+      .timer-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        align-items: center; /* Added for vertical alignment */
+        width: 100%; /* Full width for better alignment */
+        margin: 16px 0; /* Spacing above and below controls */
+      }
+
+      button,
+      input[type="time"],
+      input[type="number"] {
+        font-size: 3vmin;
+        padding: 6px 10px;
+        border-radius: 6px;
+        min-width: 120px; /* Consistent button/input width */
+        text-align: center;
+      }
+
+      button {
+        background-color: #222;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #555;
+      }
+
+      body.dark button {
+        background-color: #ddd;
+        color: #222;
+      }
+
+      body.dark input[type="time"],
+      body.dark input[type="number"] {
+        background-color: #333;
+        color: #eee;
+      }
+
+      #stopwatch-display,
+      #timer-display {
+        font-size: 4vmin;
+        margin: 10px 0;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+        }
+
+        .clock,
+        .panel {
+          order: 0;
+        }
+
+        .clock {
+          margin-bottom: 20px;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .clock {
+          width: 90vmin;
+          height: 90vmin;
+        }
+
+        #digital-time {
+          font-size: 5vmin;
+        }
+
+        .controls {
+          flex-direction: column; /* stack buttons vertically */
+          align-items: stretch; /* full width controls */
+        }
+
+        button,
+        input[type="time"],
+        input[type="number"] {
+          font-size: 4vmin;
+          width: 100%; /* full width buttons/inputs */
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="panel">
+        <div id="digital-time">--:--:--</div>
+        <div id="date-display">Loading...</div>
+
+        <div class="controls">
+          <button id="toggle-format">Switch to 24-Hour</button>
+          <button id="toggle-theme">Dark Mode</button>
+          <input type="time" id="alarm-time" />
+          <button id="set-alarm">Set Alarm</button>
+          <button id="clear-alarm" disabled>Clear Alarm</button>
+        </div>
+
+        <div id="user-message"></div>
+
+        <div class="controls">
+          <button onclick="startStopwatch()">Start Stopwatch</button>
+          <button onclick="pauseStopwatch()">Pause</button>
+          <button onclick="resetStopwatch()">Reset</button>
+        </div>
+        <div id="stopwatch-display">00:00:00</div>
+
+        <div class="controls">
+          <input
+            type="number"
+            id="timer-minutes"
+            placeholder="Minutes"
+            min="0"
+          />
+          <button onclick="startTimer()">Start Timer</button>
+          <button onclick="resetTimer()">Reset Timer</button>
+        </div>
+        <div id="timer-display">00:00</div>
+      </div>
+
+      <div class="clock" id="clock"></div>
+    </div>
+
+    <audio id="alarm-audio" loop>
+      <source
+        src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"
+        type="audio/ogg"
+      />
+    </audio>
+
+    <script>
+      const clock = document.getElementById("clock");
+      const digitalTime = document.getElementById("digital-time");
+      const dateDisplay = document.getElementById("date-display");
+      const toggleBtn = document.getElementById("toggle-format");
+      const themeBtn = document.getElementById("toggle-theme");
+      const alarmInput = document.getElementById("alarm-time");
+      const setAlarmBtn = document.getElementById("set-alarm");
+      const clearAlarmBtn = document.getElementById("clear-alarm");
+      const userMessage = document.getElementById("user-message");
+      const alarmAudio = document.getElementById("alarm-audio");
+
+      let is24Hour = false;
+      let alarmTime = null;
+
+      const hourHand = document.createElement("div");
+      const minuteHand = document.createElement("div");
+      const secondHand = document.createElement("div");
+      const center = document.createElement("div");
+      hourHand.className = "hand hour";
+      minuteHand.className = "hand minute";
+      secondHand.className = "hand second";
+      center.className = "center";
+      clock.append(hourHand, minuteHand, secondHand, center);
+
+      for (let i = 1; i <= 12; i++) {
+        const angle = ((i * 30 - 90) * Math.PI) / 180;
+        const x = 50 + 42 * Math.cos(angle);
+        const y = 50 + 42 * Math.sin(angle);
+        const num = document.createElement("div");
+        num.className = "number";
+        num.style.left = `${x}%`;
+        num.style.top = `${y}%`;
+        num.textContent = i;
+        clock.appendChild(num);
+      }
+
+      for (let i = 0; i < 60; i++) {
+        const tick = document.createElement("div");
+        tick.className = `tick ${i % 5 === 0 ? "hour-tick" : "minute-tick"}`;
+
+        const angle = ((i * 6 - 90) * Math.PI) / 180;
+        const x = 50 + 48 * Math.cos(angle);
+        const y = 50 + 48 * Math.sin(angle);
+        tick.style.left = `${x}%`;
+        tick.style.top = `${y}%`;
+        tick.style.transform = `translate(-50%, -50%) rotate(${i * 6}deg)`;
+        tick.style.animationDelay = `${(i * 0.05).toFixed(2)}s`; // continuous stagger
+
+        clock.appendChild(tick);
+      }
+
+      function updateClock() {
+        const now = new Date();
+        const seconds = now.getSeconds();
+        const minutes = now.getMinutes();
+        const hours = now.getHours();
+
+        const secDeg = seconds * 6;
+        const minDeg = minutes * 6 + seconds * 0.1;
+        const hourDeg = (hours % 12) * 30 + minutes * 0.5;
+
+        secondHand.style.transform = `translateX(-50%) rotate(${secDeg}deg)`;
+        minuteHand.style.transform = `translateX(-50%) rotate(${minDeg}deg)`;
+        hourHand.style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+
+        let displayHours = hours;
+        let ampm = "";
+        if (!is24Hour) {
+          ampm = hours >= 12 ? " PM" : " AM";
+          displayHours = hours % 12 || 12;
+        }
+
+        const hh = String(displayHours).padStart(2, "0");
+        const mm = String(minutes).padStart(2, "0");
+        const ss = String(seconds).padStart(2, "0");
+        digitalTime.textContent = `${hh}:${mm}:${ss}${ampm}`;
+
+        const options = {
+          weekday: "short",
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        };
+        dateDisplay.textContent = now.toLocaleDateString(undefined, options);
+
+        if (
+          alarmTime &&
+          `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+            2,
+            "0"
+          )}` === alarmTime &&
+          seconds === 0
+        ) {
+          userMessage.textContent = "\u23F0 Alarm ringing!";
+          alarmAudio.play();
+          clearAlarmBtn.disabled = false;
+          setAlarmBtn.disabled = true;
+        }
+      }
+
+      setAlarmBtn.onclick = () => {
+        if (!alarmInput.value) {
+          userMessage.textContent = "Please select a valid alarm time.";
+          return;
+        }
+        alarmTime = alarmInput.value;
+        userMessage.textContent = `Alarm set for ${alarmTime}`;
+        clearAlarmBtn.disabled = false;
+        setAlarmBtn.disabled = true;
+      };
+
+      clearAlarmBtn.onclick = () => {
+        alarmTime = null;
+        alarmInput.value = "";
+        alarmAudio.pause();
+        alarmAudio.currentTime = 0;
+        userMessage.textContent = "Alarm cleared.";
+        clearAlarmBtn.disabled = true;
+        setAlarmBtn.disabled = false;
+      };
+
+      toggleBtn.onclick = () => {
+        is24Hour = !is24Hour;
+        toggleBtn.textContent = is24Hour
+          ? "Switch to 12-Hour"
+          : "Switch to 24-Hour";
+      };
+
+      themeBtn.onclick = () => {
+        const isDark = document.body.classList.toggle("dark");
+        themeBtn.textContent = isDark ? "Light Mode" : "Dark Mode";
+      };
+
+      setInterval(updateClock, 1000);
+      updateClock();
+
+      // Stopwatch
+      let stopwatchInterval = null;
+      let stopwatchSeconds = 0;
+
+      function updateStopwatch() {
+        const hrs = String(Math.floor(stopwatchSeconds / 3600)).padStart(
+          2,
+          "0"
+        );
+        const mins = String(
+          Math.floor((stopwatchSeconds % 3600) / 60)
+        ).padStart(2, "0");
+        const secs = String(stopwatchSeconds % 60).padStart(2, "0");
+        document.getElementById(
+          "stopwatch-display"
+        ).textContent = `${hrs}:${mins}:${secs}`;
+      }
+
+      function startStopwatch() {
+        if (!stopwatchInterval) {
+          stopwatchInterval = setInterval(() => {
+            stopwatchSeconds++;
+            updateStopwatch();
+          }, 1000);
+        }
+      }
+
+      function pauseStopwatch() {
+        clearInterval(stopwatchInterval);
+        stopwatchInterval = null;
+      }
+
+      function resetStopwatch() {
+        pauseStopwatch();
+        stopwatchSeconds = 0;
+        updateStopwatch();
+      }
+
+      // Timer
+      let timerInterval = null;
+      let timerSeconds = 0;
+
+      function updateTimer() {
+        const mins = String(Math.floor(timerSeconds / 60)).padStart(2, "0");
+        const secs = String(timerSeconds % 60).padStart(2, "0");
+        document.getElementById(
+          "timer-display"
+        ).textContent = `${mins}:${secs}`;
+      }
+
+      function startTimer() {
+        const minutes = parseInt(
+          document.getElementById("timer-minutes").value,
+          10
+        );
+        if (isNaN(minutes)) return;
+        timerSeconds = minutes * 60;
+        updateTimer();
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+          timerSeconds--;
+          updateTimer();
+          if (timerSeconds <= 0) {
+            clearInterval(timerInterval);
+            alarmAudio.play();
+          }
+        }, 1000);
+      }
+
+      function resetTimer() {
+        clearInterval(timerInterval);
+        timerSeconds = 0;
+        updateTimer();
+        alarmAudio.pause();
+        alarmAudio.currentTime = 0;
+      }
+
+      updateStopwatch();
+      updateTimer();
+    </script>
+  </body>
+</html>
