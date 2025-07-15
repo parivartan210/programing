@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parivartan Mane | Portfolio</title>
+  <link rel="shortcut icon" href="img/favicon.jpg" type="image/x-icon">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #001f3f, #004466);
+      color: #000000;
+      line-height: 1.6;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 0;
+    }
+
+    header {
+      background-color: #00000000;
+      color: #ffffff;
+      padding: 20px 0;
+      /* box-shadow: 0 2px 10px rgba(4, 175, 255, 0.37); */
+    }
+
+    header h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    nav {
+      text-align: center;
+    }
+
+    nav a {
+      margin: 0 15px;
+      color: #f0f0f0;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #47d4ff;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      color: #ffffff;
+    }
+
+    #h2 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      color: #000000;
+    }
+
+    #about {
+      background: linear-gradient(to right, #e0f7ff, #ffffff);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      padding: 40px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    #about p {
+      margin-bottom: 15px;
+      font-size: 1.05rem;
+    }
+
+    #projects {
+      background: linear-gradient(to right, #001f3f, #004466);
+      color: #ffffff;
+      padding: 40px 0;
+    }
+
+    .project {
+      background: white;
+      padding: 20px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(16, 152, 231, 0.356);
+    }
+
+    .project img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project img:hover {
+      transform: scale(1.02);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .project h3 a {
+      font-size: 1.2rem;
+      color: #2b2b2b;
+      transition: color 0.3s;
+    }
+
+    .project h3 a:hover {
+      color: #1b94e6;
+    }
+
+    #skills {
+      background: linear-gradient(to right, #ffffff, #e6f7ff);
+      padding: 40px 0;
+      border-radius: 8px;
+    }
+
+    #skills ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    #skills li {
+      background: #3498db;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: bold;
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    #contact {
+      background: linear-gradient(to right, #001f3f, #003355);
+      color: #ffffff;
+      padding: 40px 0;
+    }
+
+    #contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    #contact-form input,
+    #contact-form textarea {
+      padding: 12px;
+      border-radius: 5px;
+      border: 1px solid #ffffff;
+      font-size: 1rem;
+    }
+
+    #contact-form textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    #contact-form button {
+      background-color: #3498db;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    #contact-form button:hover {
+      background-color: #2980b9;
+    }
+
+    footer {
+      background: linear-gradient(to right, #000000, #333333);
+      color: #ffffff;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 0.9rem;
+      border-radius: 8px;
+    }
+
+    header .profile-pic {
+      width: 100px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+      margin-left: 500px;
+      border: 2px solid #9fe2f8 ;
+    }
+
+    .shadow-box {
+      background-color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      text-decoration: none;
+      color: #000000;
+    }
+
+    .skills-list a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .skills-list a:hover {
+      color: #0c0c0c;
+    }
+
+    .skills-list {
+      list-style: none;
+      padding: 0;
+    }
+
+
+
+    .skills-list span {
+      display: inline-block;
+      width: 100px;
+    }
+
+    progress {
+      width: 200px;
+      height: 20px;
+    }
+    .p{
+      color: #000000;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <img src="img/logo.jpg" alt="Parivartan Mane Photo" class="profile-pic" />
+      <h1>My Portfolio</h1>
+      <nav>
+        <a href="home page.html">Home</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="container shadow-box">
+      <h2 id="h2">About Me</h2>
+      <p>
+        Hi, I'm <strong>Parivartan Mane</strong>, a passionate front-end web developer with a strong foundation
+        in HTML,
+        CSS, and JavaScript. I specialize in creating responsive, user-friendly websites and enjoy turning
+        complex
+        problems into elegant solutions.
+      </p>
+      <p>
+        I have experience with frameworks like React and tools like Git. I'm always learning and enjoy building
+        fast,
+        accessible, and visually appealing web applications.
+      </p>
+      <p>
+        Outside of coding, I explore design trends, contribute to open-source, and experiment with new tech
+        stacks.
+      </p>
+      <p>
+        I focus on clean, efficient code and engaging user experiences using HTML, CSS, JavaScript, and React.
+      </p>
+      <p>
+        I love tech blogging, open-source contribution, and UI/UX design exploration.
+      </p>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <h2>Projects</h2>
+
+      <div class="project">
+        <h3>Project One: Tic Tac Toe</h3>
+        <img src="img/tic tac toe.avif" alt="Tic Tac Toe Screenshot" height="300px" />
+        <p class="p">This project presents a timeless two-player Tic Tac Toe game played on a 3x3 grid...</p>
+        <h3><a href="xogame.html" class="btn">View Project</a></h3>
+      </div>
+
+      <div class="project">
+        <h3>Project Two: Snake Game</h3>
+        <img src="img/snake.png" alt="Snake Game Screenshot" height="300px" />
+        <p class="p">This project features a simple yet engaging Snake Game where the player controls a growing snake...
+        </p>
+        <h3><a href="snake game.html" class="btn">View Project</a></h3>
+      </div>
+
+      <div class="project">
+        <h3>Project Three: Animation</h3>
+        <img src="img/animation.png" alt="Project Screenshot" height="300px" />
+        <p class="p">This project showcases a dynamic animated circle that brings motion and interactivity to life...</p>
+        <h3><a href="animation.html" class="btn">View Project</a></h3>
+      </div>
+
+      <div class="project">
+        <h3>Project four: Advanced Analog Clock</h3>
+        <img src="img/clock.png" alt="Tic Tac Toe Screenshot" height="300px" />
+        <p class="p">This project showcases a feature-rich analog clock with alarm, stopwatch, and countdown timer...</p>
+        <h3><a href="clock.html" class="btn">View Project</a></h3>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="container">
+      <h2>Skills</h2>
+      <ul class="skills-list">
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank">HTML</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank">CSS</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">JavaScript</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="container">
+      <ul class="skills-list">
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank">HTML</a>
+          <progress value="90" max="100"></progress>
+        </li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank">CSS</a>
+          <progress value="70" max="100"></progress>
+        </li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">JavaScript</a>
+          <progress value="50" max="100"></progress>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <h2>Contact</h2>
+      <form id="contact-form" action="">
+        <input type="text" placeholder="Your Name" name="name" required />
+        <input type="email" placeholder="Your Email" name="email" required />
+        <textarea placeholder="Your Message" name="message" required></textarea>
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Parivartan Mane. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute("href"));
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth" });
+        }
+      });
+    });
+
+    // Contact form handler
+    document.getElementById("contact-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      alert("Message sent! (Thanks, for visiting my website.)");
+      this.reset();
+    });
+  </script>
+</body>
+
+</html>
