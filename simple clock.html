@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advanced Analog Clock</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #0d0d0d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .clock {
+            width: 300px;
+            height: 300px;
+            border: 10px solid rgba(0, 255, 255, 0.5);
+            border-radius: 50%;
+            box-shadow: 0 0 30px cyan, 0 0 60px blue;
+            position: relative;
+            background: radial-gradient(circle at center, #111 60%, #000);
+        }
+
+        .center {
+            width: 12px;
+            height: 12px;
+            background: #0ff;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            box-shadow: 0 0 10px #0ff;
+        }
+
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom;
+            transform: translateX(-50%) rotate(0deg);
+            background: #0ff;
+            box-shadow: 0 0 10px #0ff;
+            border-radius: 6px;
+        }
+
+        .hour {
+            height: 60px;
+            width: 6px;
+        }
+
+        .minute {
+            height: 90px;
+            width: 4px;
+            background: #0f0;
+            box-shadow: 0 0 10px #0f0;
+        }
+
+        .second {
+            height: 110px;
+            width: 2px;
+            background: #f00;
+            box-shadow: 0 0 8px #f00;
+        }
+
+        @media (max-width: 400px) {
+            .clock {
+                width: 220px;
+                height: 220px;
+            }
+
+            .hour {
+                height: 40px;
+            }
+
+            .minute {
+                height: 60px;
+            }
+
+            .second {
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="clock">
+        <div class="center"></div>
+        <div class="hand hour" id="hour"></div>
+        <div class="hand minute" id="minute"></div>
+        <div class="hand second" id="second"></div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const sec = now.getSeconds();
+            const min = now.getMinutes();
+            const hr = now.getHours() % 12;
+
+            const secDeg = sec * 6;
+            const minDeg = min * 6 + sec * 0.1;
+            const hrDeg = hr * 30 + min * 0.5;
+
+            document.getElementById("second").style.transform = `translateX(-50%) rotate(${secDeg}deg)`;
+            document.getElementById("minute").style.transform = `translateX(-50%) rotate(${minDeg}deg)`;
+            document.getElementById("hour").style.transform = `translateX(-50%) rotate(${hrDeg}deg)`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>

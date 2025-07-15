@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic-Tac-Toe Game</title>
+    <link rel="shortcut icon" href="/hhackers.jpg" type="image/x-icon">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #e0eafc, #cfdef3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .scoreboard {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-gap: 10px;
+            justify-content: center;
+            animation: fadeIn 1s ease;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            background: #ffffff;
+            border: 2px solid #2c3e50;
+            font-size: 2.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .cell:hover {
+            background: #f0f8ff;
+            transform: scale(1.05);
+        }
+
+        #status {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #34495e;
+            transition: all 0.3s ease;
+        }
+
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Tic-Tac-Toe</h1>
+
+    <div class="scoreboard">
+        <div>Player X: <span id="scoreX">0</span></div>
+        <div>Player O: <span id="scoreO">0</span></div>
+    </div>
+
+    <div class="board" id="board"></div>
+    <div id="status">Player X's turn</div>
+
+    <div class="buttons">
+        <button onclick="resetGame()">Restart Game</button>
+        <button onclick="resetScores()">Reset Scores</button>
+    </div>
+
+    <script>
+        const board = document.getElementById("board");
+        const status = document.getElementById("status");
+        const scoreX = document.getElementById("scoreX");
+        const scoreO = document.getElementById("scoreO");
+
+        let cells = [];
+        let currentPlayer = "X";
+        let gameOver = false;
+        let scores = { X: 0, O: 0 };
+
+        function createBoard() {
+            board.innerHTML = '';
+            cells = [];
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement("div");
+                cell.classList.add("cell");
+                cell.addEventListener("click", () => makeMove(cell, i));
+                board.appendChild(cell);
+                cells.push("");
+            }
+        }
+
+        function makeMove(cell, index) {
+            if (cell.textContent === "" && !gameOver) {
+                cell.textContent = currentPlayer;
+                cells[index] = currentPlayer;
+                if (checkWin()) {
+                    status.textContent = `🎉 Player ${currentPlayer} wins!`;
+                    scores[currentPlayer]++;
+                    updateScores();
+                    gameOver = true;
+                } else if (cells.every(cell => cell !== "")) {
+                    status.textContent = "🤝 It's a draw!";
+                    gameOver = true;
+                } else {
+                    currentPlayer = currentPlayer === "X" ? "O" : "X";
+                    status.textContent = `Player ${currentPlayer}'s turn`;
+                }
+            }
+        }
+
+        function checkWin() {
+            const winPatterns = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]
+            ];
+            return winPatterns.some(pattern => {
+                const [a, b, c] = pattern;
+                return cells[a] && cells[a] === cells[b] && cells[a] === cells[c];
+            });
+        }
+
+        function resetGame() {
+            currentPlayer = "X";
+            gameOver = false;
+            status.textContent = `Player ${currentPlayer}'s turn`;
+            createBoard();
+        }
+
+        function resetScores() {
+            scores = { X: 0, O: 0 };
+            updateScores();
+        }
+
+        function updateScores() {
+            scoreX.textContent = scores.X;
+            scoreO.textContent = scores.O;
+        }
+
+        createBoard();
+    </script>
+</body>
+
+</html>
