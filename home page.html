@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parivarta Mane | Frontend Developer Portfolio</title>
+    <link rel="shortcut icon" href="img/favicon.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+            color: #e2e8f0;
+            background: linear-gradient(to bottom right, #0f172a, #1e293b);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.7);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 2.9em;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: #3b82f6;
+        }
+
+        .navigation {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .navigation a {
+            font-size: 1.1em;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .navigation a:hover {
+            color: #60a5fa;
+        }
+
+        .btn-talk {
+            color: #ffffff;
+            background: #3b82f6;
+            padding: 10px 30px;
+            border: 2px solid #3b82f6;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-talk:hover {
+            background: transparent;
+            color: #3b82f6;
+        }
+
+        .home {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: url('background.jpg') no-repeat center center/cover;
+            background-blend-mode: overlay;
+            background-color: rgba(15, 23, 42, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 150px 20px 30px;
+        }
+
+        .content {
+            max-width: 600px;
+        }
+
+        .content h2 {
+            font-size: 3em;
+            color: #ffffff;
+        }
+
+        .content h2 span {
+            color: #60a5fa;
+        }
+
+        .content h4 {
+            font-size: 2em;
+            margin-top: 10px;
+            color: #f3f4f6;
+        }
+
+        .content p {
+            margin: 20px 0 40px;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-group a {
+            display: inline-block;
+            padding: 10px 35px;
+            border: 2px solid #60a5fa;
+            border-radius: 10px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-group a:first-child {
+            background: #3b82f6;
+            color: #ffffff;
+        }
+
+        .btn-group a:first-child:hover {
+            background: transparent;
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+
+        .btn-group a:last-child {
+            background: transparent;
+            color: #60a5fa;
+        }
+
+        .btn-group a:last-child:hover {
+            background: #3b82f6;
+            color: #ffffff;
+        }
+
+        .social-icons {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 22px;
+        }
+
+        .social-icons a {
+            width: 35px;
+            height: 35px;
+            background: #1e293b;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            border: 2px solid #ffffff;
+            outline: 2px solid #60a5fa;
+            transition: transform 0.3s;
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-5px);
+        }
+
+        .social-icons a i {
+            color: #ffffff;
+        }
+
+        @media (max-width: 768px) {
+            .content h2 {
+                font-size: 2.2em;
+            }
+
+            .content h4 {
+                font-size: 1.5em;
+            }
+
+            .navigation,
+            .btn-talk {
+                margin-top: 15px;
+                justify-content: center;
+                width: 100%;
+            }
+
+            header .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .navigation {
+                gap: 15px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content h2 {
+                font-size: 1.8em;
+            }
+
+            .content h4 {
+                font-size: 1.2em;
+            }
+
+            .btn-group a {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h2 class="logo"><span>P</span>m.e</h2>
+            <nav class="navigation">
+                <a href="protfplio page.html">About</a>
+                <a href="protfplio page.html">Project</a>
+                <a href="protfplio page.html">Skills</a>
+                <a href="protfplio page.html">Contact</a>
+            </nav>
+            <a href="protfplio page.html" class="btn-talk">Let's Talk</a>
+        </div>
+    </header>
+
+    <section class="home" id="home">
+        <div class="content">
+            <h2>Hi, I'm <span>Parivarta Mane</span></h2>
+            <h4>Frontend Developer</h4>
+            <p>
+                Passionate about crafting responsive, user-friendly websites and web applications.
+                I specialize in turning complex ideas into clean, elegant code using modern frontend technologies.
+            </p>
+            <div class="btn-group">
+                <a href="protfplio page.html" class="btn">Hire Me</a>
+                <a href="protfplio page.html" class="btn">See Projects</a>
+            </div>
+            <div class="social-icons">
+                <a href="https://www.linkedin.com/" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://www.facebook.com/" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.twitter.com/" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                <a href="https://www.instagram.com/" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
